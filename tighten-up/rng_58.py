@@ -1,4 +1,3 @@
-
 def point_in_triangle(xa,xb,xc,ya,yb,yc,px,py):
     val=0
     
@@ -35,6 +34,7 @@ def point_in_triangle(xa,xb,xc,ya,yb,yc,px,py):
         return(0)
 
 def point_on_same_side(ax,bx,cx,ay,by,cy,px,py):
+    #print("exec")
     if bx-ax!=0:
         m=(by-ay)/(bx-ax)
         sp=1
@@ -43,17 +43,20 @@ def point_on_same_side(ax,bx,cx,ay,by,cy,px,py):
         sp=0
     
     pt_in_eqn=sp*(py-ay)-m*(px-ax)
-    tript_in_eqn=sp*(cy-ay)-m*(cy-ax)
+    tript_in_eqn=sp*(cy-ay)-m*(cx-ax)
     if tript_in_eqn>0 and pt_in_eqn>0:
+        #print("yesp")
         return(1)
         
     elif tript_in_eqn<0 and pt_in_eqn<0:
+        #print("yesn")
         return(1)
         
     else:
+        #print("none?")
         return(0)
         
-
+"""
 triangle_pts=list(map(int,input().split()))
 
 xa=triangle_pts[0]
@@ -69,6 +72,7 @@ ans=point_in_triangle(xa,xb,xc,ya,yb,yc,px,py)
 print(ans)
 
 """
+stop=0
 while stop!=1:
     ini=list(map(int,input().split()))
     m=ini[0]
@@ -81,4 +85,33 @@ while stop!=1:
     for pins in range(n):
         pt=list(map(int,input().split()))
         pinlist.append(pt)
-""" 
+    free_thr=1
+    while free_thr!=0:
+        rem=[]
+        for i in range(len(vertlist)-2):
+            xa=vertlist[i][0]
+            ya=vertlist[i][1]
+            xb=vertlist[i+1][0]
+            yb=vertlist[i+1][1]
+            xc=vertlist[i+2][0]
+            yc=vertlist[i+2][1]
+            cont=1
+            for j in range(len(pinlist)):
+                px=pinlist[j][0]
+                py=pinlist[j][1]
+                if point_in_triangle(xa,xb,xc,ya,yb,yc,px,py)==1:
+                    cont=0
+                    break
+            if cont==1:
+                rem.append(vertlist[i+1])
+        free_thr=0
+        if len(rem)!=0:
+            free_thr=1
+            for i in rem:
+                vertlist.remove(i)
+    for i in range(len(vertlist)-2):
+        
+        
+    
+    print(vertlist)
+    stop=1
