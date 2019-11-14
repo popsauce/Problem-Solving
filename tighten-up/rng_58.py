@@ -44,18 +44,25 @@ def point_on_same_side(ax,bx,cx,ay,by,cy,px,py):
     
     pt_in_eqn=sp*(py-ay)-m*(px-ax)
     tript_in_eqn=sp*(cy-ay)-m*(cx-ax)
-    if tript_in_eqn>0 and pt_in_eqn>0:
+    if tript_in_eqn==0:
+        return(0)
+
+    elif tript_in_eqn>0 and pt_in_eqn>=0:
         #print("yesp")
         return(1)
         
-    elif tript_in_eqn<0 and pt_in_eqn<0:
+    elif tript_in_eqn<0 and pt_in_eqn<=0:
         #print("yesn")
         return(1)
         
     else:
         #print("none?")
         return(0)
-        
+
+def pins_replace_vertice(pins_in_triangle,xa,xb,xc,ya,yb,yc):
+
+
+
 """
 triangle_pts=list(map(int,input().split()))
 
@@ -85,6 +92,8 @@ while stop!=1:
     for pins in range(n):
         pt=list(map(int,input().split()))
         pinlist.append(pt)
+
+
     free_thr=1
     while free_thr!=0:
         rem=[]
@@ -109,9 +118,43 @@ while stop!=1:
             free_thr=1
             for i in rem:
                 vertlist.remove(i)
-    for i in range(len(vertlist)-2):
-        
-        
     
+    for i in range(len(vertlist)-2):
+        xa=vertlist[i][0]
+        ya=vertlist[i][1]
+        xb=vertlist[i+1][0]
+        yb=vertlist[i+1][1]
+        xc=vertlist[i+2][0]
+        yc=vertlist[i+2][1]
+        pins_in_triangle=[]
+        for j in pinlist:
+            px=j[0]
+            py=j[1]
+            if point_in_triangle(xa,xb,xc,ya,yb,yc,px,py)==1:
+                pins_in_triangle.append(j)
+        insrt=pins_replace_vertice(pins_in_triangle,xa,xb,xc,ya,yb,yc)
+        vertlist.pop(i+1)
+        pins_at_ends.append(insrt[0])
+        l=len(insrt)
+        pins_at_ends.append(insrt[l])
+        vertlist[i+1:i+1]=insrt
+        
+        
     print(vertlist)
     stop=1
+
+
+"""
+    remove_st_lines=[]
+    for i in range(len(vertlist)-2):
+        xa=vertlist[i][0]
+        ya=vertlist[i][1]
+        xb=vertlist[i+1][0]
+        yb=vertlist[i+1][1]
+        xc=vertlist[i+2][0]
+        yc=vertlist[i+2][1]
+        if math.sqrt(((xc-xa)**2)+((yc-ya)**2))==math.sqrt(((xc-xb)**2)+((yc-yb)**2))+math.sqrt(((xb-xa)**2)+((yb-ya)**2))
+            remove_st_lines.append(vertlist[i+1])
+    for i in remove_st_lines:
+        vertlist.remove(i)
+"""
